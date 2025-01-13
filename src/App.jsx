@@ -1,41 +1,50 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import AdminDashboard from './components/AdminDashboard';
-import CreateTask from './components/CreateTask';
 import LoginPage from './pages/LoginPage';
+import SignupPage from './pages/SignupPage';
 import DashboardPage from './pages/DashboardPage';
 import AdminPage from './pages/AdminPage';
 import { AuthProvider } from './context/AuthContext';
 import PrivateRoute from './components/PrivateRoute';
+import { LoginRoute } from './components/PrivateRoute';
+import 'mdb-ui-kit/js/mdb.es.min.js';
+import 'mdb-ui-kit/css/mdb.min.css';
+import Navbar from './components/navbar';
 
 const App = () => {
   return (
-    <AuthProvider>
-      <Router>
-        <Routes>
-          <Route path="/" element={<LoginPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route
-            path="/admin"
-            element={
-              <PrivateRoute>
-                <AdminPage />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/dashboard"
-            element={
-              <PrivateRoute>
-                <DashboardPage />
-              </PrivateRoute>
-            }
-          />
-          <Route path="/admin-dashboard" component={AdminDashboard} />
-          <Route path="/create-task" component={CreateTask} />
-        </Routes>
-      </Router>
-    </AuthProvider>
+    <>
+    
+      <AuthProvider>
+        <div className="row">
+          <Navbar/>
+          <Router>
+            <Routes>
+              <Route path="/" element={<LoginRoute><LoginPage /></LoginRoute>} />
+              <Route path="/login" element={<LoginRoute><LoginPage /></LoginRoute>} />
+              <Route path="/signup" element={<LoginRoute><SignupPage /></LoginRoute>} />
+              <Route
+                path="/admin/*"
+                element={
+                  <PrivateRoute>
+                    <AdminPage />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/user/*"
+                element={
+                  <PrivateRoute>
+                    <DashboardPage />
+                  </PrivateRoute>
+                }
+              />
+            </Routes>
+          </Router>
+        </div>
+      </AuthProvider>
+      
+    </>
   );
 };
 
