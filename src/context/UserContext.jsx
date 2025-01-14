@@ -1,6 +1,7 @@
 // context/UserContext.js
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
+import { useAuth } from './AuthContext';
 
 const UserContext = createContext();
 
@@ -10,6 +11,7 @@ export const UserProvider = ({ children }) => {
     const [roles, setRoles] = useState([]);
     const [checkList, setCheckList] = useState([]);
     const [loading, setLoading] = useState(true);
+    const {user} = useAuth();
 
     // Fetch categories for assignment
     const fetchCategories = async () => {
@@ -91,11 +93,12 @@ export const UserProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        fetchCategories();
+        
         fetchRoles();
-        if (localStorage.getItem('token')) {
+        if (localStorage.getItem('token') && user && user.role.name === 'admin') {
             fetchUsers();
             fetchCheckList();
+            fetchCategories();
         }
     }, []);
 
