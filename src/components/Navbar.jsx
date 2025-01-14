@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { initMDB, Dropdown , Collapse } from 'mdb-ui-kit/js/mdb.es.min';
 
 function Navbar() {
     const { user, logout } = useAuth();
-
+    useEffect(() => { 
+        initMDB({ Dropdown, Collapse });
+    });
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-body-tertiary">
