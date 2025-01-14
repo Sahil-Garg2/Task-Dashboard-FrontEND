@@ -14,7 +14,7 @@ export const UserProvider = ({ children }) => {
     // Fetch categories for assignment
     const fetchCategories = async () => {
         try {
-            const response = await axios.get('http://localhost:3010/api/categories');
+            const response = await axios.get(`${import.meta.env.VITE_APP_API_URL}/api/categories`);
             setCategories(response.data);
         } catch (err) {
             console.error('Error fetching categories', err);
@@ -24,7 +24,7 @@ export const UserProvider = ({ children }) => {
     // Fetch roles for assignment
     const fetchRoles = async () => {
         try {
-            const response = await axios.get('http://localhost:3010/api/roles',{
+            const response = await axios.get(`${import.meta.env.VITE_APP_API_URL}/api/roles`,{
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 },
@@ -37,7 +37,7 @@ export const UserProvider = ({ children }) => {
 
     const fetchCheckList = async () => {
         try {
-            const response = await axios.get('http://localhost:3010/api/checklist', {
+            const response = await axios.get(`${import.meta.env.VITE_APP_API_URL }/api/checklist`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 },
@@ -50,7 +50,7 @@ export const UserProvider = ({ children }) => {
 
     const createRole = async (data) => {
         try {
-            await axios.post('http://localhost:3010/api/roles/create', data, {
+            await axios.post(`${import.meta.env.VITE_APP_API_URL}/api/roles/create`, data, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 },
@@ -63,7 +63,7 @@ export const UserProvider = ({ children }) => {
     }
     const createCheckList = async (data) => {
         try {
-            await axios.post('http://localhost:3010/api/checklist/create', data, {
+            await axios.post(`${import.meta.env.VITE_APP_API_URL}/api/checklist/create`, data, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 },
@@ -78,7 +78,7 @@ export const UserProvider = ({ children }) => {
     // Fetch users
     const fetchUsers = async () => {
         try {
-            const response = await axios.get('http://localhost:3010/api/users', {
+            const response = await axios.get(`${import.meta.env.VITE_APP_API_URL}/api/users`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 },
@@ -93,8 +93,10 @@ export const UserProvider = ({ children }) => {
     useEffect(() => {
         fetchCategories();
         fetchRoles();
-        fetchUsers();
-        fetchCheckList();
+        if (localStorage.getItem('token')) {
+            fetchUsers();
+            fetchCheckList();
+        }
     }, []);
 
     return (
