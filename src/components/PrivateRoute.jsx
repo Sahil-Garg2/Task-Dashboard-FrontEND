@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 const PrivateRoute = ({ children }) => {
-  const { user ,loading, logout, login} = useAuth();
+  const { user ,loading} = useAuth();
 
   if (loading) {
     return <div>loading</div>;
@@ -21,8 +21,11 @@ export const LoginRoute = ({ children }) => {
   if (loading) {
     return <div>loading</div>;
   }
-  if (user) {
+  if (user && user.role.name === 'admin') {
     return <Navigate to="/admin" />;
+  }
+  else if(user && user.role.name === 'user') {
+    return <Navigate to="/user" />;
   }
 
   return children;
