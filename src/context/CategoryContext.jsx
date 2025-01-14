@@ -11,7 +11,7 @@ export const CategoryProvider = ({ children }) => {
     // Fetch all categories (Admin view)
     const fetchCategories = async () => {
         try {
-            const response = await axios.get('http://localhost:3010/api/categories');
+            const response = await axios.get(`${import.meta.env.VITE_APP_API_URL}/api/categories`);
             setCategories(response.data);
             setLoading(false);
         } catch (err) {
@@ -22,7 +22,7 @@ export const CategoryProvider = ({ children }) => {
     // Create a new category
     const createCategory = async (categoryData) => {
         try {
-            const response = await axios.post('http://localhost:3010/api/categories/create', categoryData, {
+            const response = await axios.post(`${import.meta.env.VITE_APP_API_URL}/api/categories/create`, categoryData, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 },
