@@ -10,11 +10,11 @@ import { LoginRoute } from './components/PrivateRoute';
 import 'mdb-ui-kit/js/mdb.es.min.js';
 import 'mdb-ui-kit/css/mdb.min.css';
 import Navbar from './components/navbar';
+import { UserProvider } from './context/UserContext';
 
 const App = () => {
   return (
     <>
-    
       <AuthProvider>
         <div className="row">
           <Navbar/>
@@ -22,7 +22,7 @@ const App = () => {
             <Routes>
               <Route path="/" element={<LoginRoute><LoginPage /></LoginRoute>} />
               <Route path="/login" element={<LoginRoute><LoginPage /></LoginRoute>} />
-              <Route path="/signup" element={<LoginRoute><SignupPage /></LoginRoute>} />
+              <Route path="/signup" element={<UserProvider><LoginRoute><SignupPage /></LoginRoute></UserProvider>} />
               <Route
                 path="/admin/*"
                 element={
