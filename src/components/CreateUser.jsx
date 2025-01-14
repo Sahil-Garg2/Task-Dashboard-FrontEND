@@ -42,7 +42,7 @@ const CreateUser = () => {
         };
 
         try {
-            await axios.post('http://localhost:3010/api/users/create', userData, {
+            await axios.post(`${import.meta.env.VITE_APP_API_URL}/api/users/create`, userData, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 },
