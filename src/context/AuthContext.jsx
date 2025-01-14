@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext();
 
@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
       try {
         const token = localStorage.getItem('token');
         if (token) {
-          const { data } = await axios.get(`http://localhost:3010/api/auth/me`, {
+          const { data } = await axios.get(`${import.meta.env.VITE_APP_API_URL}/api/auth/me`, {
             headers: { Authorization: `Bearer ${token}` },
           });
           setUser(data);
@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (email, password) => {
-  const { data } =   await axios.post(`http://localhost:3010/api/auth/login`, { email, password });
+    const { data } = await axios.post(`${import.meta.env.VITE_APP_API_URL}/api/auth/login`, { email, password });
     localStorage.setItem('token', data.token);
     setUser(data.user);
   };
