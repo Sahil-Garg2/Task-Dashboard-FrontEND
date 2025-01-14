@@ -34,7 +34,7 @@ const CreateTask = () => {
     
 
     try {
-      await axios.post('http://localhost:3010/api/tasks/create', taskData, {
+      await axios.post(`${import.meta.env.VITE_APP_API_URL}/api/tasks/create`, taskData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
