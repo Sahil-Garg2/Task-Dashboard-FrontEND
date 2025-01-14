@@ -13,7 +13,7 @@ export const TaskProvider = ({ children }) => {
         const token = localStorage.getItem('token');
         if (token) {
             try {
-                const response = await axios.get('http://localhost:3010/api/categories', {
+                const response = await axios.get(`${import.meta.env.VITE_APP_API_URL}/api/categories`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 setCategories(response.data);
@@ -28,7 +28,7 @@ export const TaskProvider = ({ children }) => {
         const token = localStorage.getItem('token');
         if (token) {
             try {
-                const response = await axios.get('http://localhost:3010/api/tasks', {
+                const response = await axios.get(`${import.meta.env.VITE_APP_API_URL}/api/tasks`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 setTasks(response.data);
