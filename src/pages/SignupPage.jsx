@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Input, Ripple, initMDB } from "mdb-ui-kit";
 import { ModalDialog } from '../components/Modal';
 import { useUser } from '../context/UserContext';
+import { useNavigate } from 'react-router-dom';
 
 const SignupPage = () => {
   const [email, setEmail] = useState('');
@@ -11,6 +12,7 @@ const SignupPage = () => {
   const { roles } = useUser();
   const [role, setRole] = useState('');
   const modalRef = React.createRef();
+  const navigate = useNavigate();
   
   useEffect(() => { 
 
@@ -31,6 +33,9 @@ const SignupPage = () => {
         role,
       });
       modalRef.current.show('Success', 'User created successfully');
+      setTimeout(() => {
+        navigate('/login');
+      }, 2000);
     } catch (error) {
       console.error('Error creating user:', error);
       modalRef.current.show('Error', 'Error creating user');  
