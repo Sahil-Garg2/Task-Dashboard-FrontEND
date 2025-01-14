@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Input, Ripple, initMDB } from "mdb-ui-kit";
 
@@ -7,7 +6,6 @@ const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { login } = useAuth();
-  const navigate = useNavigate();
 
   useEffect(() => { 
   
@@ -17,7 +15,6 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await login(email, password);
-    navigate('/admin'); // Redirect to dashboard after login
   };
 
   return (
