@@ -2,23 +2,29 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Input, Ripple, initMDB } from "mdb-ui-kit";
 import { ModalDialog } from '../components/Modal';
-
+import { useUser } from '../context/UserContext';
 
 const SignupPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
-  const [role, setRole] = useState('677e9880cc9acd6d9be5a53a');
+  const { roles } = useUser();
+  const [role, setRole] = useState('');
   const modalRef = React.createRef();
+  
   useEffect(() => { 
 
     initMDB({ Input, Ripple });
   });
 
+  useEffect(() => {
+    setRole(roles);
+  }, [roles]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        const response = await axios.post(`http://localhost:3010/api/auth/signup`, {
+      const response = await axios.post(`${import.meta.env.VITE_APP_API_URL}/api/auth/signup`, {
         email,
         password,
         username,
@@ -90,18 +96,25 @@ const SignupPage = () => {
                         </div>
 
                         <div className="d-flex flex-row align-items-center mb-4">
-                          <i className="fas fa-key fa-lg me-3 fa-fw"></i>
-                          <div data-mdb-input-init className="form-outline flex-fill mb-0">
-                            <input
-                              type="text"
-                              placeholder="Role"
+                          <i className="fas fa-lock fa-lg me-3 fa-fw"></i>
+                          <div className="form-outline flex-fill mb-0">
+                            <select data-mdb-select-init
                               value={role}
                               onChange={(e) => setRole(e.target.value)}
-                              id="form3Example4cd" className="form-control"
-                            />
-                            <label className="form-label" htmlFor="form3Example4cd">Role</label>
+                              required
+                              id="ert"
+                              className="form-select"
+                            >
+                              <option value="">Select Role</option>
+                              {roles?.map((role) => (
+                                <option key={role._id} value={role._id}>
+                                  {role.name}
+                                </option>
+                              ))}
+                            </select>
                           </div>
-                        </div>
+                        </div> 
+
 
                         <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                           <button type="submit" data-mdb-button-init data-mdb-ripple-init className="btn btn-primary btn-lg">Register</button>
