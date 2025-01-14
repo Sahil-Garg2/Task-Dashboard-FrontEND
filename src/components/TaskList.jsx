@@ -22,7 +22,7 @@ const TaskList = ({isUser=false}) => {
         const token = localStorage.getItem('token');
         if (token) {
             try {
-                const response = await axios.patch('http://localhost:3010/api/tasks/update/' + taskId, { status: isUser ? 'in-progress' : 'completed' } ,{
+                const response = await axios.patch(`${import.meta.env.VITE_APP_API_URL}/api/tasks/update/` + taskId, { status: isUser ? 'in-progress' : 'completed' } ,{
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 modalRef.current.show('success', 'Task marked as completed sucessfully');
@@ -47,7 +47,7 @@ const TaskList = ({isUser=false}) => {
         const token = localStorage.getItem('token');
         if (token) {
             try {
-                const response = await axios.patch('http://localhost:3010/api/tasks/subtask/update/' + taskId, { checklist: checklist }, {
+                const response = await axios.patch(`${import.meta.env.VITE_APP_API_URL}/api/tasks/subtask/update/` + taskId, { checklist: checklist }, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 console.log('Sub Task marked as completed', response.data);
