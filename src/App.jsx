@@ -9,7 +9,7 @@ import PrivateRoute from './components/PrivateRoute';
 import { LoginRoute } from './components/PrivateRoute';
 import 'mdb-ui-kit/js/mdb.es.min.js';
 import 'mdb-ui-kit/css/mdb.min.css';
-import Navbar from './components/navbar';
+import Navbar from './components/Navbar';
 import { UserProvider } from './context/UserContext';
 
 const App = () => {
