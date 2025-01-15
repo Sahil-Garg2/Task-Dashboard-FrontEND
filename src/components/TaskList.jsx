@@ -90,9 +90,11 @@ const TaskList = ({isUser=false}) => {
                             <td>{item.assignedRole.name}</td>
                             <td>{item.category.name}</td>
                             <td>
-                                {item.dependency && item.dependency.length <= item.currentDependencyNo ? 'Completed' : 'Pending With' +item.status?.name}
+                                {item.dependency && item.dependency.length <= item.currentDependencyNo ? 'Completed' : 'Pending With ' +item.status?.name}
                                 </td>
-                            {item.dependency && item.dependency.length > item.currentDependencyNo && categories.some((category)=> category.category.name==item.category.name && category.assignedRole._id == item.status?._id) && <td><button type="button" className="btn btn-link btn-sm btn-rounded" onClick={() => { MarkTaskAsCompleted(item._id) }}>Mark as completed</button></td>}
+                            <td>{item.dependency && item.dependency.length > item.currentDependencyNo && categories.some((category) => (category.category.name == item.category.name && category.assignedRole._id == item.status?._id) ||
+                                
+                                ((category.category == item.category.name && category.assignedRole == item.status?._id))) && <button type="button" className="btn btn-link btn-sm btn-rounded" onClick={() => { MarkTaskAsCompleted(item._id) }}>Mark as completed</button>}</td>
                         </tr>
                     ))}
                     
